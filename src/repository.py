@@ -11,7 +11,7 @@ This class is going to represent a repository
 """
 
 class repository:
-    def __init__(self, name, url, description="", branches=""): 
+    def __init__(self, name, url="", description="", branches=""): 
         self.name = name
         self.url = url
         self.description = description
@@ -23,3 +23,7 @@ def main():
     repo_desc = str(input("Brief Description:"))
 
     newrepo = repository(repo_name, repo_url, repo_desc)
+    print(newrepo.description)
+
+if __name__=="__main__":
+    main()
