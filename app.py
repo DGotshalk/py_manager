@@ -9,7 +9,7 @@
 """
 """
 import sys
-sys.path.append('/home/drewtg/git/project_manager/src')
+sys.path.append('./src')
 
 from calls import github_api
 from repository import repository
