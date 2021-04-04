@@ -11,19 +11,19 @@ This class is going to represent a repository
 """
 
 class repository:
-    def __init__(self, name, url="", description="", branches=""): 
-        self.name = name
-        self.url = url
+    def __init__(self, repo_name, description=""):
+        self.name = repo_name
         self.description = description
-        self.branches = branches
+        self.branches = None
+        self.readme = None
+        self.users = None
 
 def main():
     repo_name = str(input("Name of repository:"))
-    repo_url = str(input("URL ending of repository:"))
     repo_desc = str(input("Brief Description:"))
 
-    newrepo = repository(repo_name, repo_url, repo_desc)
+    newrepo = repository(repo_name, repo_desc)
     print(newrepo.description)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
