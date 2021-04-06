@@ -11,19 +11,10 @@ This class is going to represent a repository
 """
 
 class repository:
-    def __init__(self, repo_name, description=""):
+    def __init__(self, repo_name, description="", private="true"):
         self.name = repo_name
         self.description = description
+        self.private = private 
         self.branches = None
         self.readme = None
         self.users = None
-
-def main():
-    repo_name = str(input("Name of repository:"))
-    repo_desc = str(input("Brief Description:"))
-
-    newrepo = repository(repo_name, repo_desc)
-    print(newrepo.description)
-
-if __name__ == "__main__":
-    main()

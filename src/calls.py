@@ -21,30 +21,34 @@ class github_api:
         self.user_name = user
         self.json_header = {"Accept":"application/vnd.github.v3+json"}
         self.token = token 
+
     def user_repos(self):
         """Returns a list of user repositories"""
         url = 'https://api.github.com/users/' + self.user_name + '/repos'
-        request = requests.get(url,headers=self.json_header) 
+        request = requests.get(url, headers=self.json_header) 
         return request
     
-    # -u username:$token
     def repo_start(self, repo):
         """Creates a new repository"""
         url = 'https://api.github.com/user/repos'
         header = {"Accept":"application/vnd.github.v3+json",
                 "Authorization" : 'token ' + self.token} 
-        data = '{"name" : "' + repo.name + '"}' 
+        data = '{"name" : "' + repo.name + '", \
+                "private" : "' + repo.private + '", \
+                "description" : "' + repo.description + '"}'  
         print(data) 
         request = requests.post(url, headers=header, data=data)
         return request
     
     def repo_branches(self, repo):
-        """See current branches (description of branches if that is a thing) as well as last commits on branches"""
+        """See current branches (description of branches if that is a thing) 
+        as well as last commits on branches"""
         url = 'https://api.github.com/repos/' + self.user_name + '/' + repo.name + '/branches'
         request = requests.get(url, headers=self.json_header)
         return request 
 
     def repo_commits(self, repo):
         """View commit history of repository (have to decide what branches I would be looking at)"""
-        request = "" 
+        url = 'https://api.github.com/repos/' + self.user_name + '/' + repo.name + '/commits'
+        request = requests.get(url, headers=self.json_header)
         return request 
