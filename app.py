@@ -22,12 +22,20 @@ mygit = github_api(user, token)
 
 
 def user_repos():
-    pass
-def new_repo():
-    pass
+    repo_json = mygit.user_repos().json()    
+    return  repo_json  
+
+def new_repo(repo):
+    mygit.repo_start(repo) 
+
 def repo_branches():
+    #output repos from user_repo(), put them into repo objects, and pass it to mygit.repo_branches(repo) 
+    #mygit.repo_branches(repo)
     pass
+
 def commit_history():
+    #output repos from user_repo(), put them into repo objects, and pass it to mygit.repo_commits(repo) 
+    #mygit.repo_commits(repo)
     pass
 
 def main():
@@ -37,7 +45,7 @@ def main():
         print("[2] Create a new repo")
         print("[3] See a repositories branches")
         print("[4] See a repositories past commits")
-        print("[5] Quit\n") 
+        print("[5] Quit") 
        
         try:
             choice = int(input("Choice: ")) 
@@ -48,10 +56,18 @@ def main():
         if choice not in range(1, 6):
             print("Not a valid input\n")
         else:
+            print()
             if choice == 1:
-                print("chose 1")
+                print("Your Repos:")
+                request = user_repos()
+                for repo in request:
+                    print(repo['name'])
             elif choice == 2:
-                print("chose 2")
+                name = input("Name of new Repo: ")
+                desc = input("Description of Repo: ")
+                repo = repository(name, desc, "true")
+                new_repo(repo)
+
             elif choice == 3:
                 print("chose 3")
             elif choice == 4:

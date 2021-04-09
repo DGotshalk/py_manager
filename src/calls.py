@@ -36,7 +36,6 @@ class github_api:
         data = '{"name" : "' + repo.name + '", \
                 "private" : "' + repo.private + '", \
                 "description" : "' + repo.description + '"}'  
-        print(data) 
         request = requests.post(url, headers=header, data=data)
         return request
     
