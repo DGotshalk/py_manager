@@ -22,11 +22,12 @@ mygit = github_api(user, token)
 
 
 def user_repos():
-    repo_json = mygit.user_repos().json()    
-    return  repo_json  
+
+    repo_json = mygit.user_repos().json()
+    return  repo_json
 
 def new_repo(repo):
-    mygit.repo_start(repo) 
+    print(mygit.repo_start(repo))
 
 def repo_branches():
     #output repos from user_repo(), put them into repo objects, and pass it to mygit.repo_branches(repo) 
@@ -58,14 +59,15 @@ def main():
         else:
             print()
             if choice == 1:
-                print("Your Repos:")
                 request = user_repos()
+                print("Repos:".ljust(30) + "Owner:".ljust(20) + "Private:")
                 for repo in request:
-                    print(repo['name'])
+                    print( (repo['name'] + ": ").ljust(30) +  (repo["owner"]["login"] + ", ").ljust(20) + str(repo["private"]))
             elif choice == 2:
                 name = input("Name of new Repo: ")
                 desc = input("Description of Repo: ")
-                repo = repository(name, desc, "true")
+                priv = input("private? (true/false)") # need to have better conditional loops in case someone puts bad answer:)
+                repo = repository(name, desc, priv)
                 new_repo(repo)
 
             elif choice == 3:

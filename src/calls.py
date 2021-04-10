@@ -24,8 +24,11 @@ class github_api:
 
     def user_repos(self):
         """Returns a list of user repositories"""
-        url = 'https://api.github.com/users/' + self.user_name + '/repos'
-        request = requests.get(url, headers=self.json_header) 
+        url = 'https://api.github.com/user/repos'
+        header = {"Accept":"application/vnd.github.v3+json",
+                "Authorization" : 'token ' + self.token} 
+        params = (('visbility', 'all'),) 
+        request = requests.get(url, headers=header, params=params)
         return request
     
     def repo_start(self, repo):
