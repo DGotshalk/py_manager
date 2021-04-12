@@ -8,16 +8,18 @@
 
 """
 """
+import os
 import sys
 sys.path.append('./src')
 from calls import github_api
 from repository import repository
 
-tokenfile = open('.mytoken', "r")
+tokenfile = open('.mytoken', "r") #need to create some sort to establish this variable
 token = tokenfile.readline().split('\n')[0]
 tokenfile.close()
-user = 'dgotshalk'
-mygit = github_api(user, token)
+user = 'user' #need to create some sort of system to set this var
+project_dir = "proj_dir" #need to create some sort of system to set this var
+mygit = github_api(user, token) 
 
 
 
@@ -27,7 +29,17 @@ def user_repos():
     return  repo_json
 
 def new_repo(repo):
-    print(mygit.repo_start(repo))
+    response = mygit.repo_start(repo)
+    if response.status_code == 201:
+        new_proj_dir = project_dir + repo.name
+        try:
+            os.mkdir(os.path.join(project_dir, repo.name))
+        except FileExistsError:
+            print("Project directory: " + new_proj_dir + " already exists")
+            return
+        print("Created new directory: " + new_proj_dir)
+    else:
+        print(str(response.status_code) + " " + response.reason)
 
 def repo_branches():
     #output repos from user_repo(), put them into repo objects, and pass it to mygit.repo_branches(repo) 
@@ -65,19 +77,30 @@ def main():
                     print( (repo['name'] + ": ").ljust(30) +  (repo["owner"]["login"] + ", ").ljust(20) + str(repo["private"]))
             elif choice == 2:
                 name = input("Name of new Repo: ")
+                name = name.replace(' ', '-')
                 desc = input("Description of Repo: ")
-                priv = input("private? (true/false)") # need to have better conditional loops in case someone puts bad answer:)
+                
+                priv = input("Private? [y/n]: ") # need to have better conditional loops in case someone puts bad answer:)
+                if priv == "y":
+                    priv = "true"
+                elif priv == "n":
+                    priv = "false"
+
+                print("Making new Repository:\n")
                 repo = repository(name, desc, priv)
                 new_repo(repo)
 
             elif choice == 3:
                 print("chose 3")
+
             elif choice == 4:
                 print("chose 4")
+
             elif choice == 5:
                 print("Goodbye")
                 print()
                 break
+
             print()
 
 if __name__ == "__main__":
