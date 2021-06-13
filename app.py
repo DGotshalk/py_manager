@@ -9,16 +9,14 @@
 """
 """
 import os
-import sys
-sys.path.append('./src')
-from calls import github_api
-from repository import repository
+from src.calls import github_api
+from src.repository import repository
 
 tokenfile = open('.mytoken', "r") #need to create some sort to establish this variable
 token = tokenfile.readline().split('\n')[0]
 tokenfile.close()
-user = 'user' #need to create some sort of system to set this var
-project_dir = "proj_dir" #need to create some sort of system to set this var
+user = 'DGotshalk' #need to create some sort of system to set this var
+project_dir = "/home/drewtg/git/" #need to create some sort of system to set this var
 mygit = github_api(user, token) 
 
 
